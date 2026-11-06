@@ -1,0 +1,149 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #0e7c86;
+  --color-primary-deep: #0b4f57;
+  --color-primary-dark: #083d44;
+  --color-ink: #102e35;
+  --color-mist: #eef4f4;
+  --color-mist-2: #e2ecec;
+  --color-cream: #faf9f6;
+  --color-gold: #c8a35f;
+  --color-gold-soft: #e7d6b4;
+
+  --font-display: "Fraunces", ui-serif, Georgia, serif;
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 96px;
+}
+
+body {
+  background: var(--color-cream);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: #0e7c86;
+  color: #ffffff;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #eef4f4;
+}
+::-webkit-scrollbar-thumb {
+  background: #0e7c86;
+  border-radius: 8px;
+}
+
+/* Elegant section eyebrow label */
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.72rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--color-primary);
+}
+.eyebrow::before {
+  content: "";
+  display: block;
+  width: 2.25rem;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--color-gold));
+}
+
+/* Fine grain texture overlay for hero */
+.grain::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+.animate-marquee {
+  animation: marquee 36s linear infinite;
+}
+
+@keyframes pulse-ring {
+  0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.45); }
+  70% { box-shadow: 0 0 0 14px rgba(37, 211, 102, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
+}
+.animate-pulse-ring {
+  animation: pulse-ring 2.2s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+}
+
+@keyframes float-slow {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-12px); }
+}
+.animate-float-slow {
+  animation: float-slow 5s ease-in-out infinite;
+}
+
+/* Underline link animation */
+.nav-link {
+  position: relative;
+  transition: color 0.3s ease;
+}
+.nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  height: 2px;
+  width: 0;
+  background: var(--color-gold);
+  transition: width 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.nav-link:hover::after,
+.nav-link.active::after {
+  width: 100%;
+}
+
+/* Service card hover sheen */
+.service-card {
+  position: relative;
+  overflow: hidden;
+}
+.service-card::before {
+  content: "";
+  position: absolute;
+  top: -80%;
+  left: -120%;
+  width: 60%;
+  height: 260%;
+  background: linear-gradient(100deg, transparent, rgba(255, 255, 255, 0.75), transparent);
+  transform: rotate(20deg);
+  transition: left 0.9s ease;
+  pointer-events: none;
+}
+.service-card:hover::before {
+  left: 160%;
+}
+
+input, select, textarea {
+  font-family: var(--font-sans);
+}
+:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
