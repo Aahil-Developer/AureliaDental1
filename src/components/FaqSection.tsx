@@ -18,7 +18,7 @@ export default function FaqSection() {
             <MessageCircle size={18} /> Ask Us Anything
           </a>
           <div className="mt-8 hidden lg:block rounded-3xl overflow-hidden border border-primary/10 shadow-lg">
-            <img src="/images/smile.jpg" alt="Relaxing before treatment at Aurelia" className="w-full h-56 object-cover object-center" loading="lazy" />
+            <img src={`${import.meta.env.BASE_URL}images/smile.jpg`} alt="Relaxing before treatment at Aurelia" className="w-full h-56 object-cover object-center" loading="lazy" />
           </div>
         </div>
 

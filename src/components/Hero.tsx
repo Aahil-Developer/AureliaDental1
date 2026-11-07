@@ -7,7 +7,7 @@ export default function Hero({ onBook }: { onBook: () => void }) {
     <section id="home" className="relative min-h-[100svh] flex items-center overflow-hidden bg-primary-dark">
       {/* Background image + cinematic gradients */}
       <img
-        src="/images/hero.jpg"
+        src={`${import.meta.env.BASE_URL}images/hero.jpg`}
         alt="Aurelia Dental Clinic — bright, modern reception and treatment lounge"
         className="absolute inset-0 w-full h-full object-cover object-center"
         fetchPriority="high"

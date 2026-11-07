@@ -21,7 +21,7 @@ export default function DoctorSection({ onBook }: { onBook: () => void }) {
           <div className="absolute -inset-3 sm:-inset-4 rounded-[2.2rem] border border-gold/40 rotate-[-2deg]" aria-hidden="true" />
           <div className="relative rounded-[2rem] overflow-hidden shadow-[0_35px_80px_rgba(8,61,68,0.35)]">
             <img
-              src="/images/doctor.jpg"
+              src={`${import.meta.env.BASE_URL}images/doctor.jpg`}
               alt="Dr. Rohan Mehta, Founder and Chief Dental Surgeon at Aurelia Dental Clinic"
               className="w-full aspect-[3/4] object-cover object-top"
               loading="lazy"

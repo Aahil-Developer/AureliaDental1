@@ -95,12 +95,12 @@ export const FAQS = [
 
 /* ---------------- GALLERY ---------------- */
 export const GALLERY = [
-  { src: '/images/gallery-1.jpg', caption: 'Reception & Welcome Lounge', tag: 'Interior' },
-  { src: '/images/gallery-2.jpg', caption: 'Digital Imaging Suite', tag: 'Technology' },
-  { src: '/images/gallery-3.jpg', caption: 'Teeth Whitening in Progress', tag: 'Treatment' },
-  { src: '/images/gallery-4.jpg', caption: 'The Smile We Work Toward', tag: 'Patients' },
-  { src: '/images/gallery-5.jpg', caption: 'Treatment Room One', tag: 'Interior' },
-  { src: '/images/gallery-6.jpg', caption: 'The Aurelia Clinical Team', tag: 'Our Team' },
+  { src: `${import.meta.env.BASE_URL}images/gallery-1.jpg`, caption: 'Reception & Welcome Lounge', tag: 'Interior' },
+  { src: `${import.meta.env.BASE_URL}images/gallery-2.jpg`, caption: 'Digital Imaging Suite', tag: 'Technology' },
+  { src: `${import.meta.env.BASE_URL}images/gallery-3.jpg`, caption: 'Teeth Whitening in Progress', tag: 'Treatment' },
+  { src: `${import.meta.env.BASE_URL}images/gallery-4.jpg`, caption: 'The Smile We Work Toward', tag: 'Patients' },
+  { src: `${import.meta.env.BASE_URL}images/gallery-5.jpg`, caption: 'Treatment Room One', tag: 'Interior' },
+  { src: `${import.meta.env.BASE_URL}images/gallery-6.jpg`, caption: 'The Aurelia Clinical Team', tag: 'Our Team' },
 ];
 
 /* ---------------- CERTIFICATIONS ---------------- */

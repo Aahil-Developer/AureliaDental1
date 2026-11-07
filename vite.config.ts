@@ -18,6 +18,7 @@ export default defineConfig(async ({ mode }) => {
   }
 
   return {
+    base: process.env.GITHUB_ACTIONS === 'true' ? '/AureliaDental1/' : '/',
     plugins,
     envPrefix: ['VITE_', 'NEXT_PUBLIC_'],
     define: processEnvDefines,
