@@ -1,5 +1,5 @@
-import { useEffect, useState, type FormEvent } from 'react';
-import { CheckCircle2, ShieldCheck, Loader2, ChevronDown } from 'lucide-react';
+import { useState, type FormEvent } from 'react';
+import { CheckCircle2, ShieldCheck, Loader2, ChevronDown, MessageCircle, MessageSquareText } from 'lucide-react';
 import { CLINIC, SERVICES } from '../lib/data';
 
 export interface BookingData {
@@ -24,19 +24,6 @@ export default function BookingForm({ onClose, initialService }: { onClose?: () 
 
   const today = new Date().toISOString().split('T')[0];
 
-  useEffect(() => {
-    if (done) {
-      const ref = 'AU-' + Math.floor(100000 + Math.random() * 900000);
-      setBookingRef(ref);
-      try {
-        const prev = JSON.parse(localStorage.getItem('aurelia-bookings') ?? '[]');
-        prev.push({ ...form, ref, created: new Date().toISOString() });
-        localStorage.setItem('aurelia-bookings', JSON.stringify(prev));
-      } catch { /* storage unavailable */ }
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [done]);
-
   const set = (k: keyof BookingData) => (e: { target: { value: string } }) => {
     setForm((f) => ({ ...f, [k]: e.target.value }));
     setErrors((p) => ({ ...p, [k]: undefined }));
@@ -60,9 +47,24 @@ export default function BookingForm({ onClose, initialService }: { onClose?: () 
     setSubmitting(true);
     window.setTimeout(() => {
       setSubmitting(false);
+      setBookingRef('AU-' + Math.floor(100000 + Math.random() * 900000));
       setDone(true);
     }, 1400);
   };
+
+  const bookingMessage = [
+    `Hello ${CLINIC.name}, I would like to request an appointment.`,
+    `Name: ${form.name}`,
+    `Phone: ${form.phone}`,
+    form.email ? `Email: ${form.email}` : '',
+    `Treatment: ${form.service}`,
+    `Preferred date: ${form.date}`,
+    `Preferred time: ${form.time}`,
+    `Reference: ${bookingRef}`,
+  ].filter(Boolean).join('\n');
+  const whatsappUrl = new URL(CLINIC.whatsappHref);
+  whatsappUrl.searchParams.set('text', bookingMessage);
+  const smsHref = `sms:${CLINIC.phoneHref.slice(4)}?body=${encodeURIComponent(bookingMessage)}`;
 
   if (done) {
     return (
@@ -70,10 +72,9 @@ export default function BookingForm({ onClose, initialService }: { onClose?: () 
         <div className="w-16 h-16 mx-auto rounded-full bg-emerald-50 border border-emerald-200 flex items-center justify-center">
           <CheckCircle2 size={34} className="text-emerald-600" strokeWidth={2} />
         </div>
-        <h3 className="font-display text-2xl font-semibold text-primary-deep mt-5">Request Received</h3>
+        <h3 className="font-display text-2xl font-semibold text-primary-deep mt-5">Choose how to send your request</h3>
         <p className="text-sm text-ink/70 mt-2 max-w-sm mx-auto leading-relaxed">
-          Thank you, <span className="font-semibold text-ink">{form.name.split(' ')[0]}</span>. Our care coordinator will call{' '}
-          <span className="font-semibold text-ink">{form.phone}</span> within one working hour to confirm your visit.
+          Your appointment details are ready. Choose WhatsApp or SMS, then tap Send in your messaging app. The clinic will contact you to confirm your visit.
         </p>
         <div className="mt-5 inline-flex flex-col items-center gap-1 bg-mist rounded-2xl px-6 py-4 border border-primary/10">
           <span className="text-[10px] uppercase tracking-[0.25em] text-primary/70 font-bold">Reference</span>
@@ -81,8 +82,11 @@ export default function BookingForm({ onClose, initialService }: { onClose?: () 
           <span className="text-xs text-ink/60">{form.service} · {form.date} · {form.time.split(' · ')[0]}</span>
         </div>
         <div className="mt-6 flex flex-col sm:flex-row gap-2 justify-center">
-          <a href={CLINIC.whatsappHref} target="_blank" rel="noreferrer" className="h-11 px-6 rounded-full bg-[#25D366] text-[#0b3d2e] text-sm font-bold flex items-center justify-center gap-2 hover:brightness-105 transition">
-            Confirm faster on WhatsApp
+          <a href={whatsappUrl.toString()} target="_blank" rel="noreferrer" className="h-11 px-6 rounded-full bg-[#25D366] text-[#0b3d2e] text-sm font-bold flex items-center justify-center gap-2 hover:brightness-105 transition">
+            <MessageCircle size={17} /> Continue in WhatsApp
+          </a>
+          <a href={smsHref} className="h-11 px-6 rounded-full border border-primary/25 text-primary-deep text-sm font-semibold flex items-center justify-center gap-2 hover:bg-mist transition-colors">
+            <MessageSquareText size={17} /> Continue in SMS
           </a>
           <button onClick={() => { setForm(EMPTY); setDone(false); if (onClose) onClose(); }} className="h-11 px-6 rounded-full border border-primary/25 text-primary-deep text-sm font-semibold hover:bg-mist transition-colors">
             Done
